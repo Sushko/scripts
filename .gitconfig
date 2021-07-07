@@ -1,0 +1,12 @@
+[user]
+	name = Alexey Sushko
+	email = asushko@larch-networks.com
+[core]
+	editor = vim
+	autocrlf = true
+[alias]
+	lg = log --color --graph --all --pretty=format:'%C(yellow)%h %Cgreen%cd, %<(6,trunc)%cr %C(bold blue)%<(11,trunc)%an%Creset%C(auto)%d%Creset %<(100,trunc)%s' --date=format:'%e.%m' --topo-order
+	loh = "log --date=short --pretty=format:'%C(#AE9C05) %h %Creset %C(green)%cd%Creset %C(cyan)%<(22)%an%Creset %C(auto)%d%Creset %<(100,trunc) %s'"
+	lohf = "log --graph --all --date=short --pretty=format:'%C(#AE9C05) %h %Creset %C(green)%cd%Creset %C(cyan)%<(22)%an%Creset %C(auto)%d%Creset %<(100,trunc) %s'"
+[color]
+	ui = auto

@@ -1,0 +1,152 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Marvell
+scopeName: text.marvell
+fileTypes: [marvell, tgf.txt]
+uuid: 0f1542b9-eac7-485c-ade4-2f952adb4de5
+
+# available colors
+
+# color.white                   markup
+# color.white.italic            markup.italic
+# color.white.bold              markup.bold
+# color.white.highlight         markup.raw
+# color.grey                    comment
+# color.red                     keyword
+# color.red.highlight           invalid.illegal
+# color.orange.italic           variable.parameter
+# color.yellow                  string
+# color.green                   entity.name
+# color.green.italic            entity.other.inherited-class
+# color.blue                    support.function
+# color.blue.italic             storage.type
+# color.purple                  constant.numeric
+# color.purple.highlight        invalid.deprecated
+
+patterns:
+
+- comment: color templates
+
+- name: markup.marvell
+  match: (^|(\s+))(color\.white)((\s+)|$)
+- name: markup.italic.marvell
+  match: (^|(\s+))(color\.white\.italic)((\s+)|$)
+- name: markup.bold.marvell
+  match: (^|(\s+))(color\.white\.bold)((\s+)|$)
+- name: markup.raw.marvell
+  match: (color\.white\.highlight)
+- name: comment.marvell
+  match: (^|(\s+))(color\.grey)((\s+)|$)
+- name: keyword.marvell
+  match: (^|(\s+))(color\.red)((\s+)|$)
+- name: invalid.illegal.marvell
+  match: (color\.red\.highlight)
+- name: variable.parameter.marvell
+  match: (^|(\s+))(color\.orange\.italic)((\s+)|$)
+- name: string.marvell
+  match: (^|(\s+))(color\.yellow)((\s+)|$)
+- name: entity.name.marvell
+  match: (^|(\s+))(color\.green)((\s+)|$) 
+- name: entity.other.inherited-class.marvell
+  match: (^|(\s+))(color\.green\.italic)((\s+)|$)
+- name: support.function.marvell
+  match: (^|(\s+))(color\.blue)((\s+)|$)
+- name: storage.type.marvell
+  match: (^|(\s+))(color\.blue\.italic)((\s+)|$)
+- name: constant.numeric.marvell
+  match: (^|(\s+))(color\.purple)((\s+)|$)
+- name: invalid.deprecated.marvell
+  match: (color\.purple\.highlight)
+
+- comment: Match func... and file...
+  name: support.function.marvell #blue
+  match: (?<=\])((\s+)egress port(\s+))(?=(\[))
+
+- comment: Match keywords
+  name: markup.bold.marvell #bold
+  match: \b(slan0.)\b
+
+- comment: Match func... and file...
+  name: support.function.marvell #blue
+  match: (?<=([\r\n]^.{30}\]))((\s+)ingress port(\s+))(?=(\[))
+
+- comment: Match line comments ###, ^^^, ---, ***
+  name: comment.marvell #grey
+  begin: (^|(\s+))(\#\#\#|\^\^\^|\-\-\-|\*\*\*)
+  end: (?=($|(SIM_LOG_IN_PACKET_STR)|(SIM_LOG_OUT_REPLICATION_STR)|(SIM_LOG_ENDED_IN_PACKET_STR)))
+
+- comment: Match square brackets
+  name: comment.marvell #grey
+  match: (\[|\])
+
+- comment: Match numbers
+  name: constant.numeric.marvell #purple
+  begin: (?<=\[)(\b(\s?)(0x?[0-9A-Fa-f]+)(\s?)\b)
+  end: (?=(\]))
+
+- comment: Match numbers
+  name: constant.numeric.marvell #purple
+  begin: (?<=\[)(\b(\s?)([0-9]+)(\s?)\b)
+  end: (?=(\]))
+
+- comment: Match numbers
+  name: constant.numeric.marvell #purple
+  match: ((\s?)\b(0x?[0-9A-Fa-f]+)\b(\s?))
+
+- comment: Match numbers
+  name: constant.numeric.marvell #purple
+  match: \b[0-9a-f]+\b
+
+- comment: Match func... and file...
+  name: string.marvell #yelow
+  begin: (?<= func\[)|(?<= file\[)
+  end: (?=(\]))
+
+- comment: Match keywords
+  name: invalid.illegal.marvell #red highlight
+  match: (SIM_LOG_IN_PACKET_STR|SIM_LOG_OUT_REPLICATION_STR|SIM_LOG_ENDED_IN_PACKET_STR) # add matches
+
+- comment: Match keywords
+  name: keyword.marvell # red
+  match: (Create new descriptor) # add matches
+
+- comment: Match keywords
+  name: entity.name.marvell #green
+  match: \b(CMD_FORWARD|CMD_MIRROR|CMD_MIRROR_TO_CPU|CMD_FROM_CPU|CMD_TRAP|CMD_TRAP_TO_CPU|CMD_SOFT_DROP|CMD_HARD_DROP)\b
+
+- comment: Match keywords
+  name: markup.bold.marvell #bold
+  match: \b(packetCmd)\b
+
+- comment: Match keywords
+  name: support.function.marvell #blue
+  match: ((L3 is .*)|(NO L4 header in this packet)|(ingress packet from SLAN)|(send to SLAN)|(Final packet Hash value))
+
+- comment: Match func... and file...
+  name: keyword.marvell #red
+  match: (FAILED the Router Trigger checks)
+
+- comment: Match func... and file...
+  name: entity.name.marvell #green
+  match: ((PASSED the Router Trigger checks)|(No Bridge Bypass))
+
+# - comment: Match quoted text in ".."
+#   name: support.function.marvell
+#   begin: (^|(\s+))\[descrPtr\-\>
+#   end: \]
+
+# - comment: Match links http:// https://
+#   name: support.type.marvell
+#   begin: ((http://)|(https://)|(ftp://))
+#   end: ((\s+)|$)
+
+# - comment: Match menu items [..]
+#   name: constant.numeric.marvell
+#   match: ^(\s*+)([0-9A-F]\)) # still don't work
+
+# - comment: Match block comments <...>
+#   name: string.marvell
+#   begin: \<
+#   end: \>
+
+...

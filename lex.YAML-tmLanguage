@@ -1,0 +1,113 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Lex
+scopeName: text.lex
+fileTypes: [lex, marvell, larch]
+uuid: 0f1542b9-eac7-485c-ade4-2f952adb4de5
+
+# available colors
+
+# color.white                   markup
+# color.white.italic            markup.italic
+# color.white.bold              markup.bold
+# color.white.highlight         markup.raw
+# color.grey                    comment
+# color.red                     keyword
+# color.red.highlight           invalid.illegal
+# color.orange.italic           variable.parameter
+# color.yellow                  string
+# color.green                   entity.name
+# color.green.italic            entity.other.inherited-class
+# color.blue                    support.function
+# color.blue.italic             storage.type
+# color.purple                  constant.numeric
+# color.purple.highlight        invalid.deprecated
+
+patterns:
+
+- comment: color templates
+
+- name: markup.lex
+  match: (^|(\s+))(color\.white)((\s+)|$)
+- name: markup.italic.lex
+  match: (^|(\s+))(color\.white\.italic)((\s+)|$)
+- name: markup.bold.lex
+  match: (^|(\s+))(color\.white\.bold)((\s+)|$)
+- name: markup.raw.lex
+  match: (color\.white\.highlight)
+- name: comment.lex
+  match: (^|(\s+))(color\.grey)((\s+)|$)
+- name: keyword.lex
+  match: (^|(\s+))(color\.red)((\s+)|$)
+- name: invalid.illegal.lex
+  match: (color\.red\.highlight)
+- name: variable.parameter.lex
+  match: (^|(\s+))(color\.orange\.italic)((\s+)|$)
+- name: string.lex
+  match: (^|(\s+))(color\.yellow)((\s+)|$)
+- name: entity.name.lex
+  match: (^|(\s+))(color\.green)((\s+)|$) 
+- name: entity.other.inherited-class.lex
+  match: (^|(\s+))(color\.green\.italic)((\s+)|$)
+- name: support.function.lex
+  match: (^|(\s+))(color\.blue)((\s+)|$)
+- name: storage.type.lex
+  match: (^|(\s+))(color\.blue\.italic)((\s+)|$)
+- name: constant.numeric.lex
+  match: (^|(\s+))(color\.purple)((\s+)|$)
+- name: invalid.deprecated.lex
+  match: (color\.purple\.highlight)
+
+- comment: Match $ sign in usd values
+- name: string.lex
+  match: (^|(?<=\s))(\$)(?=([0-9]{1,3}(\,[0-9]{3})?(\,[0-9]{3})?)((\s)))
+
+# Also need to add parsing hex & contradict with 1), 2)
+#- comment: Match all digits
+#  name: entity.name.function.lex
+#  match: (\d+)
+
+- comment: Match headlines in [..]
+  name: constant.numeric.lex
+  begin: ^(\s*+)\[(\^?\])? # TOCHECK: "[^]]" and "[]]" valid?
+  end: \]
+
+- comment: Match block comments /*...*/
+  name: comment.block.lex
+  begin: \/\*
+  end: \*\/
+
+- comment: Match line comments --, //, #
+  name: comment.line.lex
+  begin: (^|(\s+))(\-\-|\/\/|\#)
+  end: $
+
+- comment: Match quoted text in '..'
+  name: string.lex
+  begin: (^|(\s+))\'
+  end: \'
+
+- comment: Match quoted text in ".."
+  name: string.lex
+  begin: (^|(\s+))\"
+  end: \"
+
+- comment: Match links http:// https://
+  name: support.type.lex
+  begin: ((http://)|(https://)|(ftp://))
+  end: ((\s+)|$)
+
+- comment: Match menu items [..]
+  name: constant.numeric.lex
+  match: ^(\s*+)([0-9A-F]\)) # still don't work
+
+- comment: Match keywords
+  name: variable.parameter.lex
+  match: (^|(?<=\s))(lex)((?=\s)|$) # add matches
+
+- comment: Match block comments <...>
+  name: entity.name.function.lex
+  begin: \<
+  end: \>
+
+...
